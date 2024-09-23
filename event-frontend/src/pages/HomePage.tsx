@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
         alt="Event Background" 
         className="absolute inset-0 w-full h-full object-cover z-[-1]" 
       />
-      <div className="absolute inset-0 bg-black opacity-50 z-[-1]" /> {/* Overlay gelap */}
+      <div className="absolute inset-0 bg-black opacity-50 z-[-1]" />
       <main className="flex flex-col items-center justify-center text-white min-h-screen py-20 relative z-10">
         <h2 className="text-4xl font-bold mb-6">Discover and Attend Amazing Events</h2>
         <p className="text-xl mb-8">

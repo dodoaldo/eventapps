@@ -107,9 +107,9 @@ export const getEventById = (req: Request, res: Response) => {
         return res.status(500).send(err);
       }
 
-      // Cek apakah results adalah array
+
       if (Array.isArray(results) && results.length > 0) {
-        return res.json(results[0]); // Mengembalikan event pertama
+        return res.json(results[0]);
       } else {
         return res.status(404).send("Event not found");
       }
@@ -141,105 +141,8 @@ export const getUserTicketsForEvent = (req: Request, res: Response) => {
   );
 };
 
-// export const getEventReviews = (req: Request, res: Response) => {
-//   const { eventId } = req.params;
-//   console.log(`Fetching reviews for event ID: ${eventId}`);
-
-//   connection.query<RowDataPacket[]>( 
-//     "SELECT user_id, rating, review FROM reviews WHERE event_id = ?",
-//     [eventId],
-//     (err, results) => {
-//       if (err) {
-//         console.error("Database error:", err);
-//         return res.status(500).send(err);
-//       }
-
-//       if (results.length > 0) {
-//         return res.json(results);
-//       } else {
-//         return res.status(404).json({ message: "No reviews found" });
-//       }
-//     }
-//   );
-// };
-
-// export const addEventReview = (req: Request, res: Response) => {
-//   const { eventId } = req.params;
-//   const { userId, rating, review } = req.body;
-
-//   const eventQuery = "SELECT date FROM events WHERE id = ?";
-
-//   connection.query<RowDataPacket[]>(
-//     eventQuery,
-//     [eventId],
-//     (err, eventResults) => {
-//       if (err) {
-//         return res.status(500).json({ message: "Database error", error: err });
-//       }
-
-//       if (!Array.isArray(eventResults) || eventResults.length === 0) {
-//         return res.status(404).json({ message: "Event not found" });
-//       }
-
-//       const eventDate = new Date(eventResults[0].date);
-//       const currentDate = new Date();
-
-//       if (eventDate >= currentDate) {
-//         return res
-//           .status(400)
-//           .json({ message: "Event has not finished yet, cannot review" });
-//       }
-
-//       const ticketQuery =
-//         "SELECT COUNT(*) AS ticketCount FROM ticket_purchases WHERE event_id = ? AND user_id = ?";
-
-//       connection.query<RowDataPacket[]>(
-//         ticketQuery,
-//         [eventId, userId],
-//         (err, ticketResults) => {
-//           if (err) {
-//             return res
-//               .status(500)
-//               .json({ message: "Database error", error: err });
-//           }
-
-//           if (
-//             !Array.isArray(ticketResults) ||
-//             ticketResults[0].ticketCount === 0
-//           ) {
-//             return res
-//               .status(400)
-//               .json({
-//                 message: "User has not purchased a ticket for this event",
-//               });
-//           }
-
-//           const insertQuery =
-//             "INSERT INTO reviews (event_id, user_id, rating, review) VALUES (?, ?, ?, ?)";
-
-//           connection.query(
-//             insertQuery,
-//             [eventId, userId, rating, review],
-//             (err, result) => {
-//               if (err) {
-//                 return res
-//                   .status(500)
-//                   .json({ message: "Failed to submit review", error: err });
-//               }
-
-//               return res
-//                 .status(201)
-//                 .json({ message: "Review added successfully" });
-//             }
-//           );
-//         }
-//       );
-//     }
-//   );
-// };
-
 export const getEventReviews = (req: Request, res: Response) => {
-  const { id } = req.params; // id dari URL
+  const { id } = req.params; 
 
   connection.query<RowDataPacket[]>(
     "SELECT user_id, rating, review FROM reviews WHERE event_id = ?",
@@ -258,9 +161,9 @@ export const getEventReviews = (req: Request, res: Response) => {
   );
 };
 
-// Menambahkan ulasan untuk event
+
 export const addEventReview = (req: Request, res: Response) => {
-  const { id } = req.params; // ID event dari URL
+  const { id } = req.params; 
   const { userId, rating, review } = req.body;
 
   const insertQuery =

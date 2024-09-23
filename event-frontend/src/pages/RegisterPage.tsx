@@ -20,7 +20,6 @@ const RegisterPage: React.FC = () => {
       })
       .then((data) => {
         console.log('Registration successful:', data);
-        // Tampilkan popup sukses
         Swal.fire({
           title: 'Registration Successful!',
           text: 'You have successfully registered.',
@@ -30,7 +29,6 @@ const RegisterPage: React.FC = () => {
       })
       .catch((error) => {
         console.error('Error registering:', error);
-        // Tampilkan popup kesalahan
         Swal.fire({
           title: 'Registration Failed!',
           text: error.message,

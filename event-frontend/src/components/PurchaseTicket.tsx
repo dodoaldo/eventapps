@@ -9,7 +9,7 @@ const PurchaseTicket: React.FC<PurchaseTicketProps> = ({ eventId }) => {
   const [message, setMessage] = useState<string | null>(null);
 
   const handlePurchase = async () => {
-    const userId = localStorage.getItem('userId'); // Ambil userId dari localStorage
+    const userId = localStorage.getItem('userId');
 
     if (!userId) {
       setMessage("Please log in to purchase tickets.");
@@ -23,7 +23,7 @@ const PurchaseTicket: React.FC<PurchaseTicketProps> = ({ eventId }) => {
       },
       body: JSON.stringify({
         event_id: eventId,
-        user_id: userId, // Gunakan userId dari localStorage
+        user_id: userId,
         quantity,
       }),
     });

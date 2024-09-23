@@ -7,14 +7,14 @@ const EventDetail: React.FC = () => {
   const [event, setEvent] = useState<any>(null);
   const [userTickets, setUserTickets] = useState<number>(0);
   const [review, setReview] = useState<string>(''); 
-  const [rating, setRating] = useState<number>(1); // Rating state
-  const [reviews, setReviews] = useState<any[]>([]); // State untuk menyimpan ulasan
+  const [rating, setRating] = useState<number>(1); 
+  const [reviews, setReviews] = useState<any[]>([]); 
   const [canReview, setCanReview] = useState<boolean>(false);
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch event details
+  
     fetch(`http://localhost:5000/api/events/${eventId}`)
       .then((response) => {
         if (!response.ok) {
@@ -32,7 +32,6 @@ const EventDetail: React.FC = () => {
       })
       .catch((error) => console.error('Error fetching event details:', error));
     
-    // Fetch user tickets
     if (userId) {
       fetch(`http://localhost:5000/api/events/${eventId}/tickets/${userId}`)
         .then((response) => {
@@ -45,7 +44,6 @@ const EventDetail: React.FC = () => {
         .catch((error) => console.error('Error fetching user tickets:', error));
     }
 
-    // Fetch event reviews
     fetch(`http://localhost:5000/api/events/${eventId}/reviews`)
       .then((response) => {
         if (!response.ok) {
@@ -93,7 +91,7 @@ const submitReview = () => {
       alert('Review submitted successfully');
       setReview('');
       setRating(1);
-      fetchReviews(); // Fetch updated reviews
+      fetchReviews();
     })
     .catch((error) => console.error('Error submitting review:', error));
   } else {
@@ -111,6 +109,7 @@ const submitReview = () => {
         <p className="text-gray-700 mb-2"><strong>Location:</strong> {event.location}</p>
         <p className="text-gray-700 mb-2"><strong>Category:</strong> {event.category}</p>
         <p className="text-gray-700 mb-4"><strong>Description:</strong></p>
+        <p className="text-gray-700 mb-4"><strong>Price:</strong> IDR {event.price}</p>
         <p className="text-gray-600 mb-4">{event.description}</p>
         <p className="text-gray-700 mb-4"><strong>Available Seats:</strong> {event.available_seats}</p>
 

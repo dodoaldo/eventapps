@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  role: string | null; // Menyimpan role pengguna
-  login: (role: string) => void; // Menambahkan fungsi login
+  role: string | null; 
+  login: (role: string) => void;
   logout: () => void;
 }
 
@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (timeElapsed < twentyFourHours) {
         setIsLoggedIn(true);
         const userData = JSON.parse(user);
-        setRole(userData.role); // Mengatur role dari user yang login
+        setRole(userData.role);
       } else {
         localStorage.removeItem('user');
         localStorage.removeItem('loginTime');
