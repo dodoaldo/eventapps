@@ -7,7 +7,7 @@ router.get('/', getEvents);
 router.post('/', createEvent);
 router.post('/purchase', purchaseTicket);
 router.get('/:id', getEventById);
-router.get('/:id/tickets/:userId', getUserTicketsForEvent);
+router.get('/:eventId/tickets/:userId', getUserTicketsForEvent);
 router.get('/:id/reviews', getEventReviews);
 router.post('/:id/reviews', addEventReview);
 

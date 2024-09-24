@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 interface PurchaseTicketProps {
   eventId: number;
@@ -16,23 +17,38 @@ const PurchaseTicket: React.FC<PurchaseTicketProps> = ({ eventId }) => {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/api/events/purchase', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        event_id: eventId,
-        user_id: userId,
-        quantity,
-      }),
+    const result = await Swal.fire({
+      title: 'Konfirmasi Pembelian',
+      text: `Apakah Anda yakin ingin membeli ${quantity} tiket?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yakin',
+      cancelButtonText: 'Tidak',
     });
 
-    const data = await response.json();
-    if (response.ok) {
-      setMessage(data.message);
+    if (result.isConfirmed) {
+      const response = await fetch('http://localhost:5000/api/events/purchase', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_id: eventId,
+          user_id: userId,
+          quantity,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage(data.message);
+        Swal.fire('Berhasil!', data.message, 'success');
+      } else {
+        setMessage(data.message);
+        Swal.fire('Gagal!', data.message, 'error');
+      }
     } else {
-      setMessage(data.message);
+      Swal.fire('Dibatalkan', 'Pembelian tiket dibatalkan.', 'info');
     }
   };
 

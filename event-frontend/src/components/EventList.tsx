@@ -87,23 +87,27 @@ const EventList: React.FC = () => {
         </select>
       </div>
 
-      <ul className="flex flex-wrap">
-        {currentEvents.map((event) => (
-          <li key={event.id} className="bg-gray-200 p-4 m-2 rounded w-full md:w-1/3 lg:w-1/4">
-            <h2 className="text-xl">{event.name}</h2>
-            <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-            <p>Location: {event.location}</p>
-            <p>Category: {event.category}</p>
-            <p>Available Seats: {event.available_seats}</p>
-            <a 
-              href={`/events/${event.id}`} 
-              className="mt-2 inline-block bg-blue-500 text-white rounded px-4 py-2 text-center"
-            >
-              Read More
-            </a>
-          </li>
-        ))}
-      </ul>
+      {currentEvents.length === 0 ? (
+        <p className="text-gray-600">Ooops, Event Not Available</p>
+      ) : (
+        <ul className="flex flex-wrap">
+          {currentEvents.map((event) => (
+            <li key={event.id} className="bg-gray-200 p-4 m-2 rounded w-full md:w-1/3 lg:w-1/4">
+              <h2 className="text-xl">{event.name}</h2>
+              <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+              <p>Location: {event.location}</p>
+              <p>Category: {event.category}</p>
+              <p>Available Seats: {event.available_seats}</p>
+              <a 
+                href={`/events/${event.id}`} 
+                className="mt-2 inline-block bg-blue-500 text-white rounded px-4 py-2 text-center"
+              >
+                Read More
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <div className="mt-4">
         {Array.from({ length: totalPages }, (_, index) => (

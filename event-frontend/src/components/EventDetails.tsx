@@ -109,13 +109,13 @@ const submitReview = () => {
         <p className="text-gray-700 mb-2"><strong>Location:</strong> {event.location}</p>
         <p className="text-gray-700 mb-2"><strong>Category:</strong> {event.category}</p>
         <p className="text-gray-700 mb-4"><strong>Description:</strong></p>
-        <p className="text-gray-700 mb-4"><strong>Price:</strong> IDR {event.price}</p>
         <p className="text-gray-600 mb-4">{event.description}</p>
+        <p className="text-gray-700 mb-4"><strong>Price:</strong> IDR {event.price}</p>
         <p className="text-gray-700 mb-4"><strong>Available Seats:</strong> {event.available_seats}</p>
 
         {userId ? (
           <div>
-            <p className="text-gray-700 mb-4"><strong>You have purchased:</strong> {userTickets} tickets</p>
+            {/* <p className="text-gray-700 mb-4"><strong>You have purchased:</strong> {userTickets} tickets</p> */}
             <div className="flex justify-center mb-8">
               <PurchaseTicket eventId={event.id} />
             </div>

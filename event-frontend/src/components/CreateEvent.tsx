@@ -22,6 +22,11 @@ const CreateEvent: React.FC = () => {
       return;
     }
 
+    const confirmCreation = window.confirm('Are you sure you want to create this event?');
+    if (!confirmCreation) {
+      return;
+    }
+
     const newEvent = {
       name,
       date,
@@ -59,6 +64,7 @@ const CreateEvent: React.FC = () => {
         setValidUntil('');
         setMaxUses(0);
         setDescription('');
+        alert('Event created successfully!');
       })
       .catch((error) => console.error('Error creating event:', error));
   };

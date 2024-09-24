@@ -29,6 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else {
         localStorage.removeItem('user');
         localStorage.removeItem('loginTime');
+        localStorage.removeItemItem("role", role);
       }
     }
   }, []);

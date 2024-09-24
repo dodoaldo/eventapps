@@ -18,7 +18,6 @@ const LoginPage: React.FC = () => {
       const twentyFourHours = 24 * 60 * 60 * 1000;
 
       if (timeElapsed < twentyFourHours) {
-        // Jika masih dalam batas waktu, arahkan ke homepage
         navigate("/");
       }
     }
