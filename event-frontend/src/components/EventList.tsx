@@ -35,14 +35,26 @@ const EventList: React.FC = () => {
       .catch((error) => console.error('Error fetching events:', error));
   }, []);
 
+  const currentDate = new Date();
+
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
       const matchesSearch = event.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
       const matchesCategory = categoryFilter ? event.category === categoryFilter : true;
       const matchesLocation = locationFilter ? event.location === locationFilter : true;
-      return matchesSearch && matchesCategory && matchesLocation;
+
+      const eventDate = new Date(event.date);
+      const isUpcoming = eventDate >= currentDate;
+      return matchesSearch && matchesCategory && matchesLocation && isUpcoming;
     });
   }, [events, debouncedSearchTerm, categoryFilter, locationFilter]);
+
+  const pastEvents = useMemo(() => {
+    return events.filter(event => {
+      const eventDate = new Date(event.date);
+      return eventDate < currentDate;
+    });
+  }, [events, currentDate]);
 
   const indexOfLastEvent = currentPage * itemsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - itemsPerPage;
@@ -88,10 +100,33 @@ const EventList: React.FC = () => {
       </div>
 
       {currentEvents.length === 0 ? (
-        <p className="text-gray-600">Ooops, Event Not Available</p>
+        <p className="text-gray-600">Ooops, No Upcoming Events Available</p>
       ) : (
         <ul className="flex flex-wrap">
           {currentEvents.map((event) => (
+            <li key={event.id} className="bg-gray-200 p-4 m-2 rounded w-full md:w-1/3 lg:w-1/4">
+              <h2 className="text-xl">{event.name}</h2>
+              <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+              <p>Location: {event.location}</p>
+              <p>Category: {event.category}</p>
+              <p>Available Seats: {event.available_seats}</p>
+              <a 
+                href={`/events/${event.id}`} 
+                className="mt-2 inline-block bg-blue-500 text-white rounded px-4 py-2 text-center"
+              >
+                Read More
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <h1 className="text-2xl font-bold mb-4 mt-8">Past Events</h1>
+      {pastEvents.length === 0 ? (
+        <p className="text-gray-600">Ooops, No Past Events Available</p>
+      ) : (
+        <ul className="flex flex-wrap">
+          {pastEvents.map((event) => (
             <li key={event.id} className="bg-gray-200 p-4 m-2 rounded w-full md:w-1/3 lg:w-1/4">
               <h2 className="text-xl">{event.name}</h2>
               <p>Date: {new Date(event.date).toLocaleDateString()}</p>

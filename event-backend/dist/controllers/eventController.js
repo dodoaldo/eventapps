@@ -104,7 +104,7 @@ const getUserTicketsForEvent = (req, res) => {
 exports.getUserTicketsForEvent = getUserTicketsForEvent;
 const getEventReviews = (req, res) => {
     const { id } = req.params;
-    connection.query("SELECT user_id, rating, review FROM reviews WHERE event_id = ?", [id], (err, results) => {
+    connection.query("SELECT reviews.id, reviews.event_id, reviews.user_id, reviews.review, reviews.rating, users.username AS user_name FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.event_id = ?", [id], (err, results) => {
         if (err) {
             return res.status(500).send(err);
         }

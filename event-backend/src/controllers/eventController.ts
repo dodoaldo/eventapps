@@ -145,7 +145,7 @@ export const getEventReviews = (req: Request, res: Response) => {
   const { id } = req.params; 
 
   connection.query<RowDataPacket[]>(
-    "SELECT user_id, rating, review FROM reviews WHERE event_id = ?",
+    "SELECT reviews.id, reviews.event_id, reviews.user_id, reviews.review, reviews.rating, users.username AS user_name FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.event_id = ?",
     [id],
     (err, results) => {
       if (err) {
